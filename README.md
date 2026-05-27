@@ -225,7 +225,7 @@ More broadly, the results suggest that fairness may be better conceptualised as 
 ## Install Dependencies
 
 ```bash
-pip install transformers accelerate datasets scipy matplotlib pandas numpy tqdm bitsandbytes torch
+pip install transformers accelerate datasets scipy matplotlib pandas numpy tqdm bitsandbytes
 ```
 
 ---
