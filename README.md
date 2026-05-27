@@ -248,22 +248,6 @@ task2_3HD_prompt_instability_ohwenchi.py
 
 ---
 
-# Output Files
-
-Generated outputs will be saved in:
-
-```text
-hd_prompt_instability_results/
-```
-
-including:
-- figures,
-- CSV tables,
-- instability metrics,
-- and qualitative flip examples.
-
----
-
 # Research Implications
 
 The findings suggest that benchmark-based fairness evaluation itself may be vulnerable to prompt framing effects. Consequently, fairness scores should not necessarily be treated as fixed properties of a model, but rather as measurements partially dependent on evaluation conditions.
