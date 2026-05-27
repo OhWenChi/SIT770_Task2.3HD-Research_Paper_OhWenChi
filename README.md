@@ -170,14 +170,43 @@ More broadly, the results suggest that fairness may be better conceptualised as 
 
 ---
 
+---
+
+# Tables
+
+## Table 1: Model Comparison Summary
+
+![Table 1: Model Comparison Summary](results/table_1_model_comparison.png)
+
+---
+
+## Table 2: PEBE Variance Reduction Comparison
+
+![Table 2: PEBE Variance Reduction Comparison](results/table_2_pebe_variance_reduction.png)
+
+---
+
+## Table 3: Bias-Type Instability by Model
+
+![Table 3: Bias-Type Instability by Model](results/table_3_bias_type_instability.png)
+
+---
+
+## Table 4: Qualitative Flip Cases
+
+![Table 4: Qualitative Flip Cases](results/table_4_qualitative_flip_cases.png)
+
+---
+
+---
+
 # Repository Structure
 
 ```text
 .
 ├── README.md
-├── requirements.txt
-├── hd_prompt_instability.ipynb
-├── hd_prompt_instability.py
+├── Task2_3HD_prompt_instability_OhWenChi.ipynb
+├── task2_3HD_prompt_instability_ohwenchi.py
 └── results/
     ├── figure_flip_rate_by_model.png
     ├── figure_piv_by_model.png
@@ -208,13 +237,13 @@ pip install transformers accelerate datasets scipy matplotlib pandas numpy tqdm 
 Open:
 
 ```text
-hd_prompt_instability.ipynb
+Task2_3HD_prompt_instability_OhWenChi.ipynb
 ```
 
 ### Python Script Version
 
 ```bash
-python hd_prompt_instability.py
+task2_3HD_prompt_instability_ohwenchi.py
 ```
 
 ---
@@ -235,18 +264,6 @@ including:
 
 ---
 
-# Hardware Notes
-
-The experiments were conducted using Google Colab T4 GPU hardware.
-
-Larger instruction-tuned models such as:
-- Mistral-7B,
-- Llama-3-8B,
-
-exceeded available GPU memory constraints during preliminary experiments. Consequently, Qwen2.5-1.5B-Instruct was selected as the primary modern instruction-tuned evaluation model.
-
----
-
 # Research Implications
 
 The findings suggest that benchmark-based fairness evaluation itself may be vulnerable to prompt framing effects. Consequently, fairness scores should not necessarily be treated as fixed properties of a model, but rather as measurements partially dependent on evaluation conditions.
@@ -264,7 +281,3 @@ Future fairness benchmarks may therefore require:
 rather than relying solely on single deterministic fairness scores.
 
 ---
-
-# Citation
-
-If you use this repository, please cite the associated research paper.
