@@ -84,7 +84,7 @@ This project introduces **Prompt-Induced Variance (PIV)**:
 PIV = Var(b_1, b_2, ..., b_n)
 ```
 
-where each \( b_i \) represents the aggregate bias score under a different semantically equivalent prompt formulation.
+where each ```math\( b_i \)``` represents the aggregate bias score under a different semantically equivalent prompt formulation.
 
 Higher PIV values indicate greater fairness-evaluation instability.
 
@@ -110,19 +110,39 @@ SA-PEBE extends prompt ensembling by assigning higher weights to prompts that ap
 w_i=\frac{1/\sigma_i^2}{\sum_j1/\sigma_j^2}
 ```
 
-where (\sigma_i^2) represents calibration variance.
+where ```math(\sigma_i^2)``` represents calibration variance.
 
 ---
 
-# Interpretation of Results
+# Key Findings
 
-Naive PEBE produced modest variance reduction across both models, suggesting that prompt aggregation can partially reduce prompt-specific noise.
+## Prompt-Induced Instability Persists
 
-However, Stability-Aware PEBE produced negative variance-reduction ratios, indicating that prompt stability estimated on calibration subsets did not generalise reliably to unseen evaluation examples.
+Prompt-induced fairness instability remained present across all evaluated models.
 
-This negative result is scientifically important because it demonstrates that improving fairness-evaluation robustness is substantially more difficult than simply averaging prompt outputs.
+- `GPT-2 Medium: 17.3% flip rate`
+- `Qwen2.5-Instruct: 14.5% flip rate`
+- `SmolLM2-Instruct: 15.3% flip rate`
 
-More broadly, the results suggest that fairness may be better conceptualised as a **distribution of possible behaviours under varying evaluation conditions** rather than as a single static scalar score.
+Approximately one in six examples changed stereotype preference solely due to semantically equivalent prompt reformulation.
+
+---
+
+# Instruction Tuning Does Not Eliminate Instability
+
+Prompt-induced instability persisted across both traditional autoregressive models and modern instruction-tuned models.
+
+This suggests that alignment and instruction tuning improve instruction-following behaviour but do not fully eliminate fairness-evaluation sensitivity to prompt framing.
+
+---
+
+# SA-PEBE Failed Consistently
+
+Contrary to expectations, Stability-Aware PEBE increased instability across all models.
+
+Additional diagnostics showed that prompt stability estimates obtained from calibration subsets failed to generalise reliably to unseen evaluation examples.
+
+This indicates that prompt stability is highly context-dependent and may not represent a transferable property of prompt formulations.
 
 ---
 
@@ -180,28 +200,6 @@ More broadly, the results suggest that fairness may be better conceptualised as 
 
 ---
 
----
-
-# Repository Structure
-
-```text
-.
-├── README.md
-├── Task2_3HD_prompt_instability_OhWenChi.ipynb
-├── task2_3HD_prompt_instability_ohwenchi.py
-└── results/
-    ├── figure_flip_rate_by_model.png
-    ├── figure_piv_by_model.png
-    ├── figure_pebe_comparison.png
-    ├── figure_bias_type_instability_by_model.png
-    ├── table_1_model_comparison.csv
-    ├── table_2_pebe_variance_reduction.csv
-    ├── table_3_bias_type_instability.csv
-    └── table_4_qualitative_flip_cases.csv
-```
-
----
-
 # Reproducing the Experiment
 
 ## Install Dependencies
@@ -232,18 +230,12 @@ task2_3HD_prompt_instability_ohwenchi.py
 
 # Research Implications
 
-The findings suggest that benchmark-based fairness evaluation itself may be vulnerable to prompt framing effects. Consequently, fairness scores should not necessarily be treated as fixed properties of a model, but rather as measurements partially dependent on evaluation conditions.
-
-This raises broader concerns regarding:
-- benchmark reproducibility,
-- fairness leaderboard reliability,
-- model comparison validity,
-- and responsible AI reporting.
+The findings suggest that fairness evaluation should be viewed as a robustness problem rather than a static measurement task. Because semantically equivalent prompt reformulations can alter measured fairness outcomes, benchmark rankings and model comparisons may partly reflect evaluation framing rather than underlying model behaviour.
 
 Future fairness benchmarks may therefore require:
 - uncertainty-aware evaluation,
 - multi-prompt robustness testing,
 - and standardised prompt protocols
-rather than relying solely on single deterministic fairness scores.
+to improve reproducibility and reliability in modern LLM fairness research.
 
 ---
