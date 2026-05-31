@@ -30,8 +30,9 @@ The experiments were conducted using:
 
 - `gpt2-medium`
 - `Qwen/Qwen2.5-1.5B-Instruct`
+- `SmolLM2-1.7B-Instruct`
 
-GPT-2 Medium was used as an earlier autoregressive baseline model, while Qwen2.5-1.5B-Instruct was selected as a modern instruction-tuned LLM.
+These models span different generations of language-model development, allowing comparison between traditional autoregressive modelling and modern instruction-tuned architectures.
 
 ---
 
@@ -40,6 +41,8 @@ GPT-2 Medium was used as an earlier autoregressive baseline model, while Qwen2.5
 The experiments use the **CrowS-Pairs** benchmark:
 
 > Nangia et al. (2020) — *CrowS-Pairs: A Challenge Dataset for Measuring Social Biases in Masked Language Models*
+
+A stratified subset of 600 examples was constructed to improve demographic coverage and reduce statistical fragility.
 
 The benchmark evaluates stereotype preference across demographic categories including:
 - race-color,
