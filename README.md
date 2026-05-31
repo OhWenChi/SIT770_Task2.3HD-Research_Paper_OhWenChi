@@ -45,13 +45,17 @@ The experiments use the **CrowS-Pairs** benchmark:
 A stratified subset of 600 examples was constructed to improve demographic coverage and reduce statistical fragility.
 
 The benchmark evaluates stereotype preference across demographic categories including:
-- race-color,
-- gender,
-- religion,
-- disability,
-- age,
-- nationality,
-- and sexual orientation.
+- Age
+- Gender
+- Race-Color
+- Religion
+- Disability
+- Nationality
+- Socioeconomic Status
+- Physical Appearance
+- Sexual Orientation
+
+Each category contains approximately 51–73 evaluation examples.
 
 ---
 
@@ -67,37 +71,6 @@ Six semantically equivalent prompt variants were evaluated:
 6. formatting variation
 
 These perturbations preserve semantic meaning while altering prompt structure and contextual framing.
-
----
-
-# Main Results
-
-| Model | PIV | Mean Output Variance | Consistency Rate | Flip Rate | Naive PEBE Bias | Naive PEBE Variance Reduction | SA-PEBE Bias | SA-PEBE Variance Reduction |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| GPT-2 Medium | 0.000107 | 0.002761 | 85.0% | 15.0% | 55.0% | 2.7% | 55.7% | -35.0% |
-| Qwen2.5-1.5B-Instruct | 0.000036 | 0.008877 | 84.0% | 16.0% | 66.7% | 8.4% | 67.6% | -21.2% |
-
----
-
-# Key Findings
-
-The results show that prompt-induced fairness instability persists across both an older autoregressive model and a modern instruction-tuned model.
-
-- GPT-2 Medium produced a **15.0% flip rate**
-- Qwen2.5-1.5B-Instruct produced a **16.0% flip rate**
-
-This means that approximately **one in six evaluation examples changed stereotype preference solely due to semantically equivalent prompt reformulation**.
-
-Qwen2.5-Instruct achieved:
-- lower aggregate Prompt-Induced Variance (PIV),
-- but higher mean output variance,
-- and slightly higher flip rates.
-
-This suggests that instruction tuning may improve global benchmark stability while still leaving substantial local example-level instability unresolved.
-
-Importantly, the observed instability does not necessarily imply that the underlying model becomes more or less biased under different prompts. Instead, the findings suggest that the fairness evaluation procedure itself introduces measurement variability.
-
-Consequently, some reported fairness differences between models may partially reflect evaluation sensitivity rather than genuine differences in underlying social bias.
 
 ---
 
@@ -123,15 +96,21 @@ To reduce prompt-induced instability, this work proposes:
 
 ### Naive PEBE
 
+Naive PEBE aggregates stereotype-preference decisions across multiple semantically equivalent prompts:
+
 ```math
 PEBE(x)=\frac{1}{n}\sum_{i=1}^{n}f_i(x)
 ```
 
-which aggregates predictions across multiple semantically equivalent prompts.
-
 ### Stability-Aware PEBE (SA-PEBE)
 
-A weighted ensemble framework that prioritises prompts with lower calibration variance.
+SA-PEBE extends prompt ensembling by assigning higher weights to prompts that appear more stable during calibration:
+
+```math
+w_i=\frac{1/\sigma_i^2}{\sum_j1/\sigma_j^2}
+```
+
+where (\sigma_i^2) represents calibration variance.
 
 ---
 
